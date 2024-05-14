@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4xut0bdfhcii"]
+
+[ext_resource type="PackedScene" uid="uid://b071m1takf8tc" path="res://Scenes/killzone.tscn" id="1_lh1kl"]
+[ext_resource type="Texture2D" uid="uid://cxdib85k1igb6" path="res://Assets/sprites/tiles.png" id="2_1kl84"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2qrlu"]
+size = Vector2(6, 4)
+
+[node name="spikes" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("2_1kl84")
+region_enabled = true
+region_rect = Rect2(112, 120, 8, 8)
+
+[node name="Killzone" parent="." instance=ExtResource("1_lh1kl")]
+position = Vector2(1, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_2qrlu")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(8, -4)
+texture = ExtResource("2_1kl84")
+region_enabled = true
+region_rect = Rect2(112, 120, 8, 8)
+
+[node name="Killzone2" parent="." instance=ExtResource("1_lh1kl")]
+position = Vector2(9, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone2"]
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_2qrlu")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(-8, -4)
+texture = ExtResource("2_1kl84")
+region_enabled = true
+region_rect = Rect2(112, 120, 8, 8)
+
+[node name="Killzone3" parent="." instance=ExtResource("1_lh1kl")]
+position = Vector2(-7, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone3"]
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_2qrlu")

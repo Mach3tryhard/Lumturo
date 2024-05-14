@@ -1,0 +1,123 @@
+[gd_scene load_steps=7 format=3 uid="uid://2xvldfaodvj4"]
+
+[ext_resource type="Script" path="res://Scripts/options.gd" id="1_5p5r5"]
+[ext_resource type="FontFile" uid="uid://c10v71v5lys3b" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="1_6glmr"]
+[ext_resource type="Texture2D" uid="uid://c7mnkp5tyuc7j" path="res://Assets/sprites/Stars/star2.png" id="2_catr2"]
+[ext_resource type="AudioStream" uid="uid://b6r7iialytc3h" path="res://Assets/sounds/button.mp3" id="3_8eu61"]
+
+[sub_resource type="Curve" id="Curve_wemit"]
+_data = [Vector2(0.0058997, 1), 0.0, 0.0, 0, 0, Vector2(0.746313, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.510429), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_n7pp3"]
+offsets = PackedFloat32Array(0, 0.324759, 0.697749, 1)
+colors = PackedColorArray(0.054902, 0.027451, 0.105882, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.054902, 0.027451, 0.105882, 1)
+
+[node name="options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5p5r5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CanvasLayer"]
+amount = 256
+lifetime = 5.0
+texture = ExtResource("2_catr2")
+emission_shape = 3
+emission_rect_extents = Vector2(1920, 1080)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.3
+scale_amount_curve = SubResource("Curve_wemit")
+color_ramp = SubResource("Gradient_n7pp3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -505.5
+offset_top = -154.0
+offset_right = 505.5
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Button6" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_6glmr")
+theme_override_font_sizes/font_size = 32
+text = "back"
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6glmr")
+theme_override_font_sizes/font_size = 32
+text = "a, ← - walking left"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6glmr")
+theme_override_font_sizes/font_size = 32
+text = "d, → - walking right
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6glmr")
+theme_override_font_sizes/font_size = 32
+text = "	space, ↑,  w  - jumping/double jumping"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6glmr")
+theme_override_font_sizes/font_size = 32
+text = "s, ↓ - crouching"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6glmr")
+theme_override_font_sizes/font_size = 32
+text = "esc - return to menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_8eu61")
+autoplay = true
+mix_target = 2
+bus = &"Music"
+
+[connection signal="pressed" from="Control/VBoxContainer/Button6" to="." method="_on_button_6_pressed"]

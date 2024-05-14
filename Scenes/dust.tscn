@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://2bwoo1s7lihk"]
+
+[ext_resource type="Texture2D" uid="uid://baly8pmckghfx" path="res://Assets/sprites/Dust/dust1.png" id="1_lumu4"]
+[ext_resource type="Texture2D" uid="uid://clajbmv0jwqs2" path="res://Assets/sprites/Dust/dust2.png" id="2_piiwl"]
+[ext_resource type="Texture2D" uid="uid://bfij0i8lahm4f" path="res://Assets/sprites/Dust/dust3.png" id="3_vh2ie"]
+[ext_resource type="Texture2D" uid="uid://tlcmiv58it38" path="res://Assets/sprites/Dust/dust4.png" id="4_nhgg0"]
+[ext_resource type="Texture2D" uid="uid://dx8tpmapf2mvv" path="res://Assets/sprites/knight.png" id="5_2wfnm"]
+[ext_resource type="Script" path="res://Scripts/dust.gd" id="6_rpga6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewgl0"]
+atlas = ExtResource("5_2wfnm")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w2t4h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lumu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_piiwl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vh2ie")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nhgg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewgl0")
+}],
+"loop": false,
+"name": &"dust_animation",
+"speed": 12.0
+}]
+
+[sub_resource type="Animation" id="Animation_xe5f3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.705882)]
+}
+
+[sub_resource type="Animation" id="Animation_tpt4i"]
+resource_name = "new_animation"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.705882), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_552xt"]
+_data = {
+"RESET": SubResource("Animation_xe5f3"),
+"new_animation": SubResource("Animation_tpt4i")
+}
+
+[node name="dust" type="AnimatedSprite2D"]
+modulate = Color(1, 1, 1, 0.705882)
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_w2t4h")
+animation = &"dust_animation"
+autoplay = "dust_animation"
+frame = 4
+frame_progress = 1.0
+script = ExtResource("6_rpga6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_552xt")
+}
+autoplay = "new_animation"

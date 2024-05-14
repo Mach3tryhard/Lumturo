@@ -1,0 +1,133 @@
+[gd_scene load_steps=9 format=3 uid="uid://t2qwkxsubvru"]
+
+[ext_resource type="Script" path="res://Scripts/menu.gd" id="1_ms1xq"]
+[ext_resource type="FontFile" uid="uid://c10v71v5lys3b" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="1_qpvct"]
+[ext_resource type="Texture2D" uid="uid://c7mnkp5tyuc7j" path="res://Assets/sprites/Stars/star2.png" id="2_eo8wu"]
+[ext_resource type="AudioStream" uid="uid://b6r7iialytc3h" path="res://Assets/sounds/button.mp3" id="3_b870m"]
+
+[sub_resource type="Gradient" id="Gradient_07jkb"]
+offsets = PackedFloat32Array(0.0761905, 0.501587, 0.91746)
+colors = PackedColorArray(0.054902, 0.027451, 0.105882, 1, 0.744921, 0.675069, 0.301929, 1, 0.054902, 0.027451, 0.105882, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8ie3y"]
+gradient = SubResource("Gradient_07jkb")
+
+[sub_resource type="Curve" id="Curve_v3qv3"]
+_data = [Vector2(0.0058997, 1), 0.0, 0.0, 0, 0, Vector2(0.746313, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.510429), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_6am3n"]
+offsets = PackedFloat32Array(0, 0.324759, 0.697749, 1)
+colors = PackedColorArray(0.054902, 0.027451, 0.105882, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.054902, 0.027451, 0.105882, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ms1xq")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_8ie3y")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CanvasLayer"]
+amount = 256
+lifetime = 5.0
+texture = ExtResource("2_eo8wu")
+emission_shape = 3
+emission_rect_extents = Vector2(1920, 1080)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.3
+scale_amount_curve = SubResource("Curve_v3qv3")
+color_ramp = SubResource("Gradient_6am3n")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 68.0
+offset_right = 20.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -228.0
+offset_top = -291.0
+offset_right = 231.0
+offset_bottom = -84.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = -80
+theme_override_fonts/font = ExtResource("1_qpvct")
+theme_override_font_sizes/font_size = 128
+text = "LUMTURO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -64.0
+offset_right = 110.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_qpvct")
+theme_override_font_sizes/font_size = 32
+text = "Start"
+
+[node name="Options" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_qpvct")
+theme_override_font_sizes/font_size = 32
+text = "Options"
+
+[node name="Quit" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_qpvct")
+theme_override_font_sizes/font_size = 32
+text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_b870m")
+autoplay = true
+mix_target = 2
+bus = &"Music"
+
+[connection signal="pressed" from="Control/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

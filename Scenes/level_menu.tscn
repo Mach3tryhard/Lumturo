@@ -1,0 +1,123 @@
+[gd_scene load_steps=7 format=3 uid="uid://bedqlokvtnwwc"]
+
+[ext_resource type="FontFile" uid="uid://c10v71v5lys3b" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="1_ecihj"]
+[ext_resource type="Script" path="res://Scripts/level_menu.gd" id="1_whg4o"]
+[ext_resource type="Texture2D" uid="uid://c7mnkp5tyuc7j" path="res://Assets/sprites/Stars/star2.png" id="2_f5brv"]
+[ext_resource type="AudioStream" uid="uid://b6r7iialytc3h" path="res://Assets/sounds/button.mp3" id="3_ndjss"]
+
+[sub_resource type="Curve" id="Curve_bkian"]
+_data = [Vector2(0.0058997, 1), 0.0, 0.0, 0, 0, Vector2(0.746313, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.510429), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_ndmx8"]
+offsets = PackedFloat32Array(0, 0.324759, 0.697749, 1)
+colors = PackedColorArray(0.054902, 0.027451, 0.105882, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.054902, 0.027451, 0.105882, 1)
+
+[node name="level_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_whg4o")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CanvasLayer"]
+amount = 256
+lifetime = 5.0
+texture = ExtResource("2_f5brv")
+emission_shape = 3
+emission_rect_extents = Vector2(1920, 1080)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.3
+scale_amount_curve = SubResource("Curve_bkian")
+color_ramp = SubResource("Gradient_ndmx8")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -324.0
+offset_top = -130.0
+offset_right = 324.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="back" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("1_ecihj")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+
+[node name="level1" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ecihj")
+theme_override_font_sizes/font_size = 32
+text = "1. Fields with soldiers"
+
+[node name="level2" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ecihj")
+theme_override_font_sizes/font_size = 32
+text = "2. Dirt and platforms"
+alignment = 0
+
+[node name="level3" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ecihj")
+theme_override_font_sizes/font_size = 32
+text = "3. Dropper map"
+alignment = 0
+
+[node name="level4" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ecihj")
+theme_override_font_sizes/font_size = 32
+text = "4. Into the castle"
+alignment = 0
+
+[node name="level5" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ecihj")
+theme_override_font_sizes/font_size = 32
+text = "5. Spikes in snow"
+alignment = 0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ndjss")
+autoplay = true
+mix_target = 2
+bus = &"Music"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="pressed" from="Control/VBoxContainer/back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/level1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/level2" to="." method="_on_level_2_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/level3" to="." method="_on_level_3_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/level4" to="." method="_on_level_4_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/level5" to="." method="_on_level_5_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

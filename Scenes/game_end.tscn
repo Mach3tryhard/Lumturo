@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://ddc3trub8jllc"]
+
+[ext_resource type="Script" path="res://Scripts/game_end.gd" id="1_v0jop"]
+[ext_resource type="AudioStream" uid="uid://dr63t1vbvhtpf" path="res://Assets/sounds/power_up.wav" id="3_orvmd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_knjqu"]
+radius = 5.0
+height = 14.0
+
+[sub_resource type="Animation" id="Animation_2dolh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_6by2y"]
+resource_name = "pickup_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8f3oe"]
+_data = {
+"RESET": SubResource("Animation_2dolh"),
+"pickup_animation": SubResource("Animation_6by2y")
+}
+
+[node name="Game_ender" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_v0jop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_knjqu")
+
+[node name="sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_orvmd")
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8f3oe")
+}
+
+[node name="End_Timer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emission_shape = 1
+emission_sphere_radius = 9.95
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 6.45
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="End_Timer" to="." method="_on_end_timer_timeout"]

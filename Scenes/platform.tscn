@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvfx1dd24hnk8"]
+
+[ext_resource type="Texture2D" uid="uid://daeonb6pyw5md" path="res://Tilesets/Tilemap images/tiles.png" id="1_mirjo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0r1x"]
+size = Vector2(40, 7)
+
+[node name="Platform" type="AnimatableBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mirjo")
+region_enabled = true
+region_rect = Rect2(135, 15, 42, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_l0r1x")
+one_way_collision = true

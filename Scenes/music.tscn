@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwuyflrqc8511"]
+
+[ext_resource type="AudioStream" uid="uid://dicyqeprsr3pv" path="res://Assets/sounds/ObservingTheStar.wav" id="1_87m0x"]
+[ext_resource type="Script" path="res://Scripts/music.gd" id="2_48fcx"]
+
+[node name="Music" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_87m0x")
+autoplay = true
+max_distance = 100000.0
+attenuation = 1e-05
+bus = &"Music"
+script = ExtResource("2_48fcx")
+
+[connection signal="finished" from="." to="." method="_on_finished"]
